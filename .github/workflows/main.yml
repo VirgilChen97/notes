@@ -44,6 +44,9 @@ jobs:
       - name: 安装 Node.js
         uses: actions/setup-node@v2.4.0
         
+      - name: 安装 hexo-cli
+        run: npm install -g hexo-cli
+        
       - name: 导出所有 issue 为 Hexo 文章
         run: python3 issuesToHexo.py ${{env.ISSUE_USERNAME}} ${{env.ISSUE_REPO}} hexo/source/_posts
 
