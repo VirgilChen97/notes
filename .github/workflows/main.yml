@@ -37,6 +37,9 @@ jobs:
 
       - name: 安装 Python
         uses: actions/setup-python@v2.2.2
+        
+      - name: 安装必要python依赖
+        run: pip3 install requests
       
       - name: 安装 Node.js
         uses: actions/setup-node@v2.4.0
