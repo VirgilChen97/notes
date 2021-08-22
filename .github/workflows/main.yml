@@ -42,7 +42,7 @@ jobs:
         uses: actions/setup-node@v2.4.0
         
       - name: 导出所有 issue 为 Hexo 文章
-        run: python3 issuesToHexo.py ${{ISSUE_USERNAME}} ${{ISSUE_REPO}} hexo/source/_posts
+        run: python3 issuesToHexo.py ${{env.ISSUE_USERNAME}} ${{env.ISSUE_REPO}} hexo/source/_posts
 
       - name: 发布 Hexo 博客
         run: |
