@@ -49,9 +49,15 @@ jobs:
         
       - name: 导出所有 issue 为 Hexo 文章
         run: python3 issuesToHexo.py ${{env.ISSUE_USERNAME}} ${{env.ISSUE_REPO}} hexo/source/_posts
+        
+      - name: 导入 gh-pages 所在 repo 的 deploy key
+        uses: Boberneprotiv/setup-ssh-key@v1
+        with:
+          private-key: $HEXO_DEPLOY_KEY
 
       - name: 发布 Hexo 博客
         run: |
           cd hexo
           npm i
           hexo g
+          hexo d
