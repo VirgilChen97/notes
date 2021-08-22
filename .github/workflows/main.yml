@@ -11,6 +11,8 @@ on:
   workflow_dispatch:
 
 env:
+  GIT_USER: VirgilChen97
+  GIT_EMAIL: virgilchen97@gmail.com
   HEXO_REPO: VirgilChen97/my-blog-hexo
   HEXO_BRANCH: master
   ISSUE_USERNAME: VirgilChen97
@@ -53,8 +55,14 @@ jobs:
       - name: 导入 gh-pages 所在 repo 的 deploy key
         uses: Boberneprotiv/setup-ssh-key@v1
         with:
-          private-key: $HEXO_DEPLOY_KEY
-
+          private-key: ${{secrets.HEXO_DEPLOY_PRI}}
+          known-hosts: github.com
+      
+      - name: 设置 git 用户名，邮箱
+        run: |
+          git config --global user.name $GIT_USER
+          git config --global user.email $GIT_EMAIL
+      
       - name: 发布 Hexo 博客
         run: |
           cd hexo
