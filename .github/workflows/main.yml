@@ -55,7 +55,7 @@ jobs:
       - name: 导入 gh-pages 所在 repo 的 deploy key
         uses: Boberneprotiv/setup-ssh-key@v1
         with:
-          private-key: ${{secrets.HEXO_DEPLOY_PRI}}
+          private-key: ${{secrets.HEXO_DEPLOY_KEY}}
           known-hosts: github.com
       
       - name: 设置 git 用户名，邮箱
