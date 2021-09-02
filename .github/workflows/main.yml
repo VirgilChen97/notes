@@ -27,18 +27,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: 设置 Hexo repo key
-        env:
-          HEXO_DEPLOY_PRI: ${{secrets.HEXO_REPO_KEY}}
-        run: |
-          sudo timedatectl set-timezone "Asia/Shanghai"
-          mkdir -p ~/.ssh/
-          echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-          git config --global user.name $GIT_USER
-          git config --global user.email $GIT_EMAIL
-          
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
@@ -47,6 +35,7 @@ jobs:
         with:
           repository: ${{ env.HEXO_REPO }}
           ref: ${{ env.HEXO_BRANCH }}
+          token: ${{ secret.REPO_ACCESS_TOKEN }}
           path: hexo
           submodules: recursive
 
@@ -64,13 +53,19 @@ jobs:
         
       - name: 导出所有 issue 为 Hexo 文章
         run: python3 issuesToHexo.py ${{env.ISSUE_USERNAME}} ${{env.ISSUE_REPO}} hexo/source/_posts
-        
-      - name: 设置 Hexo deploy repo key
+      
+      - name: 设置 Hexo deploy key
         env:
           HEXO_DEPLOY_PRI: ${{secrets.HEXO_DEPLOY_KEY}}
         run: |
+          sudo timedatectl set-timezone "Asia/Shanghai"
+          mkdir -p ~/.ssh/
           echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
-      
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.name $GIT_USER
+          git config --global user.email $GIT_EMAIL
+          
       - name: 发布 Hexo 博客
         run: |
           cd hexo
