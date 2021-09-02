@@ -35,7 +35,7 @@ jobs:
         with:
           repository: ${{ env.HEXO_REPO }}
           ref: ${{ env.HEXO_BRANCH }}
-          token: ${{ secret.REPO_ACCESS_TOKEN }}
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
           path: hexo
           submodules: recursive
 
