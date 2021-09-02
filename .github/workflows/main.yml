@@ -27,9 +27,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Configuration environment
+      - name: 设置 Hexo repo key
         env:
-          HEXO_DEPLOY_PRI: ${{secrets.HEXO_DEPLOY_KEY}}
+          HEXO_DEPLOY_PRI: ${{secrets.HEXO_REPO_KEY}}
         run: |
           sudo timedatectl set-timezone "Asia/Shanghai"
           mkdir -p ~/.ssh/
@@ -64,6 +64,12 @@ jobs:
         
       - name: 导出所有 issue 为 Hexo 文章
         run: python3 issuesToHexo.py ${{env.ISSUE_USERNAME}} ${{env.ISSUE_REPO}} hexo/source/_posts
+        
+      - name: 设置 Hexo deploy repo key
+        env:
+          HEXO_DEPLOY_PRI: ${{secrets.HEXO_DEPLOY_KEY}}
+        run: |
+          echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
       
       - name: 发布 Hexo 博客
         run: |
