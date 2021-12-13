@@ -27,19 +27,13 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    
-      # 配置git
-      - name: Configure git
-        env:
-          TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        run: git config --global url."https://${TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
-        
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
       - name: 下载 Hexo 所在 repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.4.0
         with:
+          token: ${{ secrets.ACCESS_TOKEN }}
           repository: ${{ env.HEXO_REPO }}
           ref: ${{ env.HEXO_BRANCH }}
           path: hexo
