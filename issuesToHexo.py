@@ -4,10 +4,11 @@ import time
 import sys
 
 class Article:
-    title = ''
-    category = ''
-    tags = []
-    content = ''
+    def __init__(self):
+        self.title = ''
+        self.category = ''
+        self.tags = []
+        self.content = ''
 
 def getIssues(owner, repo, page, size):
     url = str.format('https://api.github.com/repos/{}/{}/issues', owner, repo)
