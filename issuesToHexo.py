@@ -60,6 +60,7 @@ date: {}
 category: {}
 tags:
 {}
+toc: true
 ---
 
 {}
